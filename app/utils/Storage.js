@@ -1,9 +1,12 @@
+const AsyncStorage =
+  require("@react-native-async-storage/async-storage").default;
+
 const storeData = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
   } catch (e) {
-    throw new Error("Error storing data");
+    console.log(e);
   }
 };
 
@@ -12,7 +15,7 @@ const getData = async (key) => {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
-    throw new Error("Error getting data");
+    console.log(e);
   }
 };
 
