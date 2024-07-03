@@ -15,3 +15,5 @@ const getData = async (key) => {
     throw new Error("Error getting data");
   }
 };
+
+export { storeData, getData };
