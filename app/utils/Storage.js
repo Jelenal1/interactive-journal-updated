@@ -37,7 +37,6 @@ const addItem = async (key, listId, item) => {
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(list);
     await AsyncStorage.removeItem(key);
-    console.log(newLists);
     await AsyncStorage.setItem(key, JSON.stringify(newLists));
   } catch (e) {
     console.log(e);
@@ -59,7 +58,6 @@ const updateItem = async (key, listId, itemId, newItem) => {
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(list);
     await AsyncStorage.removeItem(key);
-    console.log(newLists[0].items);
     await AsyncStorage.setItem(key, JSON.stringify(newLists));
   } catch (e) {
     console.log(e);
@@ -84,7 +82,6 @@ const removeItem = async (key, listId, itemId) => {
     };
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(newlist);
-    console.log(newLists[0].items);
     await AsyncStorage.removeItem(key);
     await AsyncStorage.setItem(key, JSON.stringify(newLists));
   } catch (e) {
