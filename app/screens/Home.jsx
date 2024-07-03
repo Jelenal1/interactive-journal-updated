@@ -11,7 +11,6 @@ export default function Home(props) {
     try {
       const lists = await getData("lists");
       setLists(lists);
-      console.log(lists);
     } catch (e) {
       console.log(e);
     }
@@ -19,7 +18,7 @@ export default function Home(props) {
 
   useEffect(() => {
     getLists();
-  }, []);
+  });
 
   return (
     <MainView>
