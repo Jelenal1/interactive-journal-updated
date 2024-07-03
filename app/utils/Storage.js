@@ -89,4 +89,35 @@ const removeItem = async (key, listId, itemId) => {
   }
 };
 
-export { storeData, getData, addItem, updateItem, removeItem };
+const updateList = async (key, list) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    if (!lists) {
+      return;
+    }
+    let newLists = lists.filter((l) => l.id !== list.id);
+    newLists.push(list);
+    await AsyncStorage.removeItem(key);
+    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const deleteList = async (key, listId) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    if (!lists) {
+      return;
+    }
+    let newLists = lists.filter((l) => l.id !== listId);
+    await AsyncStorage.removeItem(key);
+    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { storeData, getData, addItem, updateItem, removeItem, updateList, deleteList};
