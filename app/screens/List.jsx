@@ -56,7 +56,7 @@ export default function List(props) {
     }
     await removeItem("lists", props.route.params.list.id, deleteitem.id);
     let lists = await getData("lists");
-    let list = lists.find((l) => l.id === props.route.params.list.id);;
+    let list = lists.find((l) => l.id === props.route.params.list.id);
     setItem("");
     props.navigation.navigate("List", { list });
   };
@@ -100,7 +100,14 @@ export default function List(props) {
                     style={{ width: 50, height: 50 }}
                   />
                 ) : (
-                  <Pressable>
+                  <Pressable
+                    onPress={() => {
+                      props.navigation.navigate("Cam", {
+                        list: props.route.params.list,
+                        item: item,
+                      });
+                    }}
+                  >
                     <MaterialCommunityIcons
                       name="camera"
                       size={20}
