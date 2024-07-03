@@ -1,8 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./app/screens/Home";
+import NewListScreen from "./app/screens/NewList";
+import ListScreen from "./app/screens/List";
 import { useEffect } from "react";
 import { useColorScheme } from "nativewind";
+import { storeData } from "./app/utils/Storage";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,6 +13,7 @@ export default function App() {
   const { colorScheme, setColorScheme } = useColorScheme();
   useEffect(() => {
     setColorScheme("dark");
+    storeData("lists", []);
   }, []);
   return (
     <NavigationContainer>
@@ -26,6 +30,8 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="NewList" component={NewListScreen} />
+        <Stack.Screen name="List" component={ListScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
