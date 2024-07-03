@@ -15,7 +15,7 @@ export default function NewList(props) {
         props.navigation.navigate("Home");
         return;
       }
-      const newList = { id: lists.length - 1, name, description, items: [] };
+      const newList = { id: lists.length, name, description, items: [] };
       await storeData("lists", [...lists, newList]);
       props.navigation.navigate("Home");
     } catch (e) {
