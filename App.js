@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useColorScheme } from "nativewind";
 import { storeData } from "./app/utils/Storage";
 import Camera from "./app/screens/Camera";
+import Picture from "./app/screens/Picture";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="NewList" component={NewListScreen} />
         <Stack.Screen name="List" component={ListScreen} />
         <Stack.Screen name="Cam" component={Camera} />
+        <Stack.Screen name="Picture" component={Picture} />
       </Stack.Navigator>
     </NavigationContainer>
   );

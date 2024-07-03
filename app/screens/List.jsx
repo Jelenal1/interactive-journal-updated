@@ -95,10 +95,18 @@ export default function List(props) {
               </View>
               <View className="flex flex-row items-center gap-2">
                 {item.imageUri !== "" ? (
-                  <Image
-                    source={{ uri: item.imageUri }}
-                    style={{ width: 50, height: 50 }}
-                  />
+                  <Pressable
+                    onPress={() => {
+                      props.navigation.navigate("Picture", {
+                        imageUri: item.imageUri,
+                      });
+                    }}
+                  >
+                    <Image
+                      source={{ uri: item.imageUri }}
+                      style={{ width: 50, height: 50 }}
+                    />
+                  </Pressable>
                 ) : (
                   <Pressable
                     onPress={() => {
