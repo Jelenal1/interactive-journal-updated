@@ -84,7 +84,12 @@ export default function Camera(props) {
       imageUri: capturedImage,
       done: props.route.params.item.done,
     };
-    await updateItem("lists", props.route.params.list.id, props.route.params.item.id, newItem);
+    await updateItem(
+      "lists",
+      props.route.params.list.id,
+      props.route.params.item.id,
+      newItem
+    );
     let lists = await getData("lists");
     let list = lists.find((l) => l.id === props.route.params.list.id);
     setCapturedImage("");
@@ -196,7 +201,7 @@ export default function Camera(props) {
           zoom={zoom}
         >
           <GestureDetector gesture={pinch}>
-            <View className="h-full w-full"></View>
+            <View className="h-4/5 w-full"></View>
           </GestureDetector>
           <Pressable
             className="h-20 w-20 border-4 border-white rounded-full mb-4"
