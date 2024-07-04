@@ -102,7 +102,7 @@ export default function List(props) {
   return (
     <MainView>
       <View className="flex h-full pb-10 ">
-        <View className="flex flex-row justify-between items-center">
+        <View className="flex flex-row justify-between items-center border-b-2 border-white">
           <View className="flex flex-col justify-center items-start">
             <Text className="text-white text-xl">
               {props.route.params.list.name}
