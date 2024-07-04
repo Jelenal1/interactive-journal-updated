@@ -1,10 +1,20 @@
 const AsyncStorage =
   require("@react-native-async-storage/async-storage").default;
+const Storage = require("react-native-storage");
+
+const storage = new Storage({
+  size: 1000,
+  storageBackend: AsyncStorage,
+  defaultExpires: null,
+  enableCache: true,
+});
 
 const storeData = async (key, value) => {
   try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem(key, jsonValue);
+    storage.save({
+      key: key,
+      data: value,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -12,8 +22,8 @@ const storeData = async (key, value) => {
 
 const getData = async (key) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    const value = await storage.load({ key: key });
+    return value;
   } catch (e) {
     console.log(e);
   }
@@ -21,8 +31,7 @@ const getData = async (key) => {
 
 const addItem = async (key, listId, item) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    let lists = await storage.load({ key: key });
     if (!lists) {
       return;
     }
@@ -36,8 +45,11 @@ const addItem = async (key, listId, item) => {
     list.items.push(newItem);
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(list);
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+    await storage.remove({ key: key });
+    await storage.save({
+      key: key,
+      data: newLists,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -45,8 +57,7 @@ const addItem = async (key, listId, item) => {
 
 const updateItem = async (key, listId, itemId, newItem) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    let lists = await storage.load({ key: key });
     if (!lists) {
       return;
     }
@@ -57,8 +68,11 @@ const updateItem = async (key, listId, itemId, newItem) => {
     item.done = newItem.done;
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(list);
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+    await storage.remove({ key: key });
+    await storage.save({
+      key: key,
+      data: newLists,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -66,8 +80,7 @@ const updateItem = async (key, listId, itemId, newItem) => {
 
 const removeItem = async (key, listId, itemId) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    let lists = await storage.load({ key: key });
     if (!lists) {
       return;
     }
@@ -82,8 +95,11 @@ const removeItem = async (key, listId, itemId) => {
     };
     let newLists = lists.filter((l) => l.id !== listId);
     newLists.push(newlist);
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+    await storage.remove({ key: key });
+    await storage.save({
+      key: key,
+      data: newLists,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -91,15 +107,17 @@ const removeItem = async (key, listId, itemId) => {
 
 const updateList = async (key, list) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    let lists = await storage.load({ key: key });
     if (!lists) {
       return;
     }
     let newLists = lists.filter((l) => l.id !== list.id);
     newLists.push(list);
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+    await storage.remove({ key: key });
+    await storage.save({
+      key: key,
+      data: newLists,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -107,17 +125,27 @@ const updateList = async (key, list) => {
 
 const deleteList = async (key, listId) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
-    let lists = jsonValue != null ? JSON.parse(jsonValue) : null;
+    let lists = await storage.load({ key: key });
     if (!lists) {
       return;
     }
     let newLists = lists.filter((l) => l.id !== listId);
-    await AsyncStorage.removeItem(key);
-    await AsyncStorage.setItem(key, JSON.stringify(newLists));
+    await storage.remove({ key: key });
+    await storage.save({
+      key: key,
+      data: newLists,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
-export { storeData, getData, addItem, updateItem, removeItem, updateList, deleteList};
+export {
+  storeData,
+  getData,
+  addItem,
+  updateItem,
+  removeItem,
+  updateList,
+  deleteList,
+};
