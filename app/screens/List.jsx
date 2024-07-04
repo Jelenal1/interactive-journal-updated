@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainView from "../components/MainView";
 import {
   FlatList,
@@ -7,10 +7,12 @@ import {
   TextInput,
   View,
   Image,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { addItem, getData, removeItem, updateItem } from "../utils/Storage";
+import { Keyboard } from "react-native";
 
 export default function List(props) {
   const [item, setItem] = useState("");
@@ -20,6 +22,7 @@ export default function List(props) {
     imageUri: "",
     done: false,
   });
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const addNewItem = async () => {
     if (item === "") {
@@ -60,6 +63,31 @@ export default function List(props) {
     setItem("");
     props.navigation.navigate("List", { list });
   };
+
+  useEffect(() => {
+    function onKeyboardDidShow(e) {
+      if (Platform.OS === "ios") {
+        setKeyboardHeight(e.endCoordinates.height);
+      }
+    }
+
+    function onKeyboardDidHide() {
+      setKeyboardHeight(0);
+    }
+
+    const showSubscription = Keyboard.addListener(
+      "keyboardDidShow",
+      onKeyboardDidShow
+    );
+    const hideSubscription = Keyboard.addListener(
+      "keyboardDidHide",
+      onKeyboardDidHide
+    );
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  });
   return (
     <MainView>
       <View className="flex h-full pb-10 ">
@@ -128,6 +156,7 @@ export default function List(props) {
                     setItem(item.name);
                     setEditItem(item);
                   }}
+                  className="p-2"
                 >
                   <MaterialCommunityIcons
                     name="pencil"
@@ -147,7 +176,12 @@ export default function List(props) {
           )}
           keyExtractor={(item) => item.id}
         />
-        <View className="flex flex-row justify-between justify-self-end gap-2">
+        <View
+          className="flex flex-row justify-between justify-self-end gap-2"
+          style={{
+            marginBottom: keyboardHeight,
+          }}
+        >
           <TextInput
             className="border-b-2 border-white flex-1 p-2 text-white"
             placeholder="Name"
