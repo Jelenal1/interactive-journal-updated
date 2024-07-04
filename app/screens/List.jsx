@@ -53,6 +53,13 @@ export default function List(props) {
     props.navigation.navigate("List", { list });
   };
 
+  const checkBox = async (item) => {
+    await updateItem("lists", props.route.params.list.id, item.id, item);
+    let lists = await getData("lists");
+    let list = lists.find((l) => l.id === props.route.params.list.id);
+    props.navigation.navigate("List", { list });
+  };
+
   const deleteItem = async (deleteitem) => {
     if (deleteitem.id === "") {
       return;
@@ -106,16 +113,26 @@ export default function List(props) {
           </Pressable>
         </View>
         <FlatList
-          data={props.route.params.list.items}
+          data={props.route.params.list.items.sort((a, b) => {
+            if (a.done && !b.done) {
+              return 1;
+            }
+            if (!a.done && b.done) {
+              return -1;
+            }
+            return 0;
+          })}
           renderItem={({ item }) => (
             <View className="flex flex-row items-center justify-between">
               <View className="flex flex-row items-center gap-2">
                 <Checkbox
                   value={item.done}
                   onValueChange={(value) => {
-                    item.done = value;
-                    props.navigation.navigate("List", {
-                      list: props.route.params.list,
+                    checkBox({
+                      id: item.id,
+                      name: item.name,
+                      imageUri: item.imageUri,
+                      done: value,
                     });
                   }}
                 />
