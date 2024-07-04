@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MainView from "../components/MainView";
 import {
   FlatList,
@@ -23,6 +23,7 @@ export default function List(props) {
     done: false,
   });
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const inputRef = useRef();
 
   const addNewItem = async () => {
     if (item === "") {
@@ -72,6 +73,9 @@ export default function List(props) {
   };
 
   useEffect(() => {
+    if (editItem.id !== "") {
+      inputRef.current.focus();
+    }
     function onKeyboardDidShow(e) {
       if (Platform.OS === "ios") {
         setKeyboardHeight(e.endCoordinates.height);
@@ -99,9 +103,14 @@ export default function List(props) {
     <MainView>
       <View className="flex h-full pb-10 ">
         <View className="flex flex-row justify-between items-center">
-          <Text className="text-white text-xl">
-            {props.route.params.list.name}
-          </Text>
+          <View className="flex flex-col justify-center items-start">
+            <Text className="text-white text-xl">
+              {props.route.params.list.name}
+            </Text>
+            <Text className="text-white text-sm">
+              {props.route.params.list.description}
+            </Text>
+          </View>
           <Pressable
             onPress={() => {
               props.navigation.navigate("EditList", {
@@ -207,6 +216,7 @@ export default function List(props) {
             onChangeText={(text) => {
               setItem(text);
             }}
+            ref={inputRef}
           />
           {editItem.id !== "" ? (
             <Pressable
