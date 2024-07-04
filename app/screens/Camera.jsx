@@ -13,8 +13,8 @@ import { getData, updateItem } from "../utils/Storage";
 export default function Camera(props) {
   const [flash, setFlash] = useState("off");
   const [torch, setTorch] = useState(false);
-  const [startZoom, setStartZoom] = useState(0);
-  const [zoom, setZoom] = useState(1);
+  const [startZoom, setStartZoom] = useState(1);
+  const [zoom, setZoom] = useState(0);
   const cameraRef = useRef();
   const [facing, setFacing] = useState("back");
   const [permission, requestPermission] = useCameraPermissions();
