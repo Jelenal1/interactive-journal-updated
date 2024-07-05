@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { Image, ScrollView, Text, TextInput, View } from "react-native";
+import CameraImagePicker from "../components/CameraImagePicker";
 import { loadEntryById, saveEntryById } from "../utils/FileManagement";
 
 const Page = () => {
@@ -28,7 +29,7 @@ const Page = () => {
                 console.log(error);
                 switch (error.name) {
                     case "NotFoundError":
-                        navigate.navigate("Home")
+                        navigate.navigate("Interactive Journal");
                         break;
                 }
             }
@@ -54,6 +55,7 @@ const Page = () => {
         >
 
             <ScrollView>
+                <CameraImagePicker article={article} setArticle={setArticle} />
                 <View className="flex w-full flex-col items-center">
                     <TextInput
                         className={
@@ -66,6 +68,9 @@ const Page = () => {
                     />
                     <Text>{article?.date}</Text>
                     <Text>{"🏃🏻‍♀️ " + article?.steps + " Schritte"}</Text>
+                    <View>
+                        <Image source={{ uri: article?.image }} className="w-3/4" />
+                    </View>
                 </View>
                 <TextInput
                     multiline

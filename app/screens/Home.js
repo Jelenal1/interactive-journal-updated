@@ -1,10 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ArticlePreview from "../components/ArticlePreview";
 import {
-    deleteAllEntries,
     loadEntries,
     saveEntryById
 } from "../utils/FileManagement";
@@ -12,7 +10,6 @@ import { getStepsOfRange } from "../utils/SensorManagement";
 
 export default function Page() {
     const [articles, setArticles] = useState([]);
-    const navigation = useNavigation();
 
     const fetchArticles = async () => {
         const savedArticles = await loadEntries("article");
@@ -42,13 +39,12 @@ export default function Page() {
                             title: "",
                             steps: currentSteps,
                             content: "",
-                            picture_references: [],
+                            image: ""
                         }
 
                         await saveEntryById("article", entryToSave.id,
                             entryToSave
                         );
-                        console.log(await loadEntries("article"));
                         fetchArticles();
                     }}
                     className="ounded-full ml-auto mr-[65px] mt-2 flex w-10 items-center"
@@ -67,9 +63,6 @@ export default function Page() {
                         fetchArticles={fetchArticles}
                     />
                 ))}
-                <Pressable onPress={async () => await deleteAllEntries()}>
-                    <Text>Delete All</Text>
-                </Pressable>
             </ScrollView>
         </View>
     );
