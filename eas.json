@@ -13,10 +13,6 @@
     "production": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "ANDROID_HOME": "/Users/aelbanyard/Library/Android/sdk",
-        "NODE_ENV": "production"
       }
     }
   },
