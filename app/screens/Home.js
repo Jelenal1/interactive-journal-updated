@@ -47,7 +47,7 @@ export default function Page() {
                         );
                         fetchArticles();
                     }}
-                    className="ounded-full ml-auto mr-[65px] mt-2 flex w-10 items-center"
+                    className="rounded-full ml-auto mt-2 flex w-10 items-center"
                 >
                     <AntDesign name="pluscircleo" size={30} color="black" />
                 </Pressable>
