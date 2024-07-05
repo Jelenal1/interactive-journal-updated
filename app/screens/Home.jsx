@@ -17,8 +17,10 @@ export default function Home(props) {
   };
 
   useEffect(() => {
-    getLists();
-  });
+    setInterval(() => {
+      getLists();
+    }, 500);
+  }, []);
 
   return (
     <MainView>

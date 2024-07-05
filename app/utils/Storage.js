@@ -6,11 +6,12 @@ const storage = new Storage({
   storageBackend: AsyncStorage,
   defaultExpires: null,
   enableCache: true,
+  sync: {},
 });
 
 const storeData = async (key, value) => {
   try {
-    storage.save({
+    await storage.save({
       key: key,
       data: value,
     });
