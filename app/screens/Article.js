@@ -1,14 +1,15 @@
-import { loadEntryById, saveEntryById } from "@/utils/FileManagement";
-import React, { useEffect, useRef, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
-import Navbar from "../_components/Navbar";
+import { loadEntryById, saveEntryById } from "../utils/FileManagement";
 
 const Page = () => {
-    const { id } = useLocalSearchParams();
+    const route = useRoute();
+    const { id } = route.params;
     const [article, setArticle] = useState();
-    const router = useRouter();
     const contentInputRef = useRef(null);
     const titleInputRef = useRef(null);
+    const navigate = useNavigation();
 
     const handleChange = async (text, field) => {
         setArticle({ ...article, [field]: text });
@@ -27,7 +28,7 @@ const Page = () => {
                 console.log(error);
                 switch (error.name) {
                     case "NotFoundError":
-                        router.push("/");
+                        navigate.navigate("Home")
                         break;
                 }
             }
@@ -37,7 +38,6 @@ const Page = () => {
     if (!article) {
         return (
             <View className="flex h-full w-full flex-col bg-neutral-200">
-                <Navbar showBackButton />
                 <Text>Loading...</Text>
             </View>
         );
@@ -52,7 +52,7 @@ const Page = () => {
                 contentInputRef.current?.focus();
             }}
         >
-            <Navbar showBackButton />
+
             <ScrollView>
                 <View className="flex w-full flex-col items-center">
                     <TextInput

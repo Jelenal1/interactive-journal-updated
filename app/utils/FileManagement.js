@@ -42,13 +42,13 @@ export const loadEntries = async (key) => {
 };
 
 export const deleteEntry = async (key) => {
-    storage.remove({
+    await storage.remove({
         key: key,
     });
 };
 
 export const deleteEntryById = async (key, id) => {
-    storage.remove({
+    await storage.remove({
         key: key,
         id: id,
     });
