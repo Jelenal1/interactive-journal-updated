@@ -18,7 +18,7 @@ export default function Page() {
 
     useEffect(() => {
         fetchArticles();
-    }, []);
+    }, [articles]);
 
     if (!articles) {
         return null;
