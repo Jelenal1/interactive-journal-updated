@@ -1,33 +1,33 @@
 {
   "expo": {
-    "name": "foto-shoppinglist",
-    "slug": "foto-shoppinglist",
+    "name": "interactive-journal",
+    "slug": "interactive-journal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/interactive-journal.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/interactive-journal.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aelban.foto-shoppinglist"
+      "bundleIdentifier": "com.jelena.interactivejournal"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/interactive-journal.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aelban.fotoshoppinglist"
+      "package": "com.jelena.interactivejournal"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": ".assets/interactive-journal.png"
     },
     "extra": {
       "eas": {
-        "projectId": "e501e577-1407-4fb0-b818-e7b0c824f643"
+        "projectId": "a85fb3df-0642-4117-840b-e70d27017395"
       }
     }
   }
