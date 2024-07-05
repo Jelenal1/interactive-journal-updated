@@ -1,7 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { Image, ScrollView, Text, TextInput, View } from "react-native";
-import CameraImagePicker from "../components/CameraImagePicker";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import { loadEntryById, saveEntryById } from "../utils/FileManagement";
 
 const Page = () => {
@@ -55,11 +54,10 @@ const Page = () => {
         >
 
             <ScrollView>
-                <CameraImagePicker article={article} setArticle={setArticle} />
                 <View className="flex w-full flex-col items-center">
                     <TextInput
                         className={
-                            article?.title ? "text-3xl" : "border text-3xl text-gray-300"
+                            article?.title ? "text-3xl w-fit" : "border text-3xl text-gray-300"
                         }
                         value={article?.title}
                         onChange={(e) => handleChange(e.nativeEvent.text, "title")}
@@ -68,9 +66,6 @@ const Page = () => {
                     />
                     <Text>{article?.date}</Text>
                     <Text>{"🏃🏻‍♀️ " + article?.steps + " Schritte"}</Text>
-                    <View>
-                        <Image source={{ uri: article?.image }} className="w-3/4" />
-                    </View>
                 </View>
                 <TextInput
                     multiline
