@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aelban.fotoshoppinglist"
+      "bundleIdentifier": "com.aelban.foto-shoppinglist"
     },
     "android": {
       "adaptiveIcon": {
